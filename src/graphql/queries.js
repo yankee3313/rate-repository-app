@@ -28,12 +28,20 @@ export const GET_USER = gql `
         }
     }`;
 
-export const GET_GITHUB_URL = gql `
+export const GET_REPOSITORY = gql `
     query Query($repositoryId: ID!) {
         repository(id: $repositoryId) {
         id
         fullName
         url
+        name
+        description
+        forksCount
+        stargazersCount
+        reviewCount
+        ratingAverage
+        language
+        ownerAvatarUrl
         }
     }
-`
+`;
