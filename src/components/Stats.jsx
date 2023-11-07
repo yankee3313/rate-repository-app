@@ -16,7 +16,11 @@ const styles = StyleSheet.create({
         color: theme.textSecondary,
         justifyContent: 'space-evenly',
         paddingBottom: 8
-    }
+    },
+    subheading: {
+        fontSize: theme.fontSizes.subheading,
+        fontWeight: theme.fontWeights.bold,
+    },
   });
 
 export const formatNumber = (num) => {
