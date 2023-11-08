@@ -5,7 +5,7 @@ const getRepository = (id) => {
     const { data, error, loading } = useQuery(GET_REPOSITORY,
         {variables: { repositoryId: id }});
 
-    return loading ? {} : data;
+    return loading ? null : data;
 }
 
 export default getRepository;

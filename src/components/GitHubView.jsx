@@ -42,15 +42,14 @@ const GitHubView = () => {
     const repository = data.repository
     
     if (repository){
-      console.log(repository.url)
-    return(
-      <View style={styles.itemContainer}>
-        <HeaderAndImage item={repository}/>
-        <Stats item={repository}/>
-        <Pressable style={styles.GitHubButton} onPress={() => {Linking.openURL(`${repository.url}`)}} >
-            <Text style={styles.buttonText}>Open in GitHub</Text>
-        </Pressable>
-      </View>
-  );
+      return(
+        <View style={styles.itemContainer}>
+          <HeaderAndImage item={repository}/>
+          <Stats item={repository}/>
+          <Pressable style={styles.GitHubButton} onPress={() => {Linking.openURL(`${repository.url}`)}} >
+              <Text style={styles.buttonText}>Open in GitHub</Text>
+          </Pressable>
+        </View>
+      );
     }};
 export default GitHubView;
