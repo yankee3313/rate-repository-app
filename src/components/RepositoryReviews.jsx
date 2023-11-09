@@ -30,11 +30,13 @@ const RepositoryReviews = () => {
         ? data.repository.reviews.edges.map(edge => edge.node)
         : [];
 
-    if (reviews){
+    const reversedReviews = reviews.slice().reverse();
+
+    if (reversedReviews){
     
         return(
             <FlatList
-                data={reviews}
+                data={reversedReviews}
                 ItemSeparatorComponent={ItemSeparator}
                 keyExtractor={item => item.id}
                 renderItem={({item}) => 
