@@ -32,18 +32,18 @@ const RepositoryReviews = () => {
 
     if (reviews){
     
-    return(
-        <FlatList
-            data={reviews}
-            ItemSeparatorComponent={ItemSeparator}
-            keyExtractor={item => item.id}
-            renderItem={({item}) => 
-            <ReviewItem review={item} />
-            }
-        />
-  );
-    } else {
-        return <Text>Loading...</Text>
+        return(
+            <FlatList
+                data={reviews}
+                ItemSeparatorComponent={ItemSeparator}
+                keyExtractor={item => item.id}
+                renderItem={({item}) => 
+                <ReviewItem review={item} />
+                }
+            />
+        );
+    }   else {
+            return <Text>Loading...</Text>
     }
 };
 export default RepositoryReviews;

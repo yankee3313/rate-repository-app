@@ -10,12 +10,13 @@ import * as Linking from 'expo-linking';
 
 const styles = StyleSheet.create({
     itemContainer:{
-        paddingBottom: 4,
+        paddingBottom: 10,
         borderBottomColor: 'grey',
         borderBottomWidth: 8,
         flexDirection: 'column',
         justifyContent: 'space-between',
         display: 'flex',
+        marginBottom: 10
     },
     gitHubBtn: {
         padding: 10

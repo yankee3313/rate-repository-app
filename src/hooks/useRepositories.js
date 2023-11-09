@@ -4,7 +4,7 @@ import { GET_REPOSITORIES } from '../graphql/queries';
 const useRepositories = () => {
     const { data, error, loading } = useQuery(GET_REPOSITORIES);
 
-    return loading ? null : data;
+    return loading ? {} : data;
 }
 
 export default useRepositories;
