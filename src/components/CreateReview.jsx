@@ -42,16 +42,16 @@ const styles = StyleSheet.create({
 });
 
 const validationSchema = yup.object().shape({
-    ownername: yup
+    ownerName: yup
         .string()
         .required('Owner Name is required'),
-    repositoryname: yup
+    repositoryName: yup
         .string()
         .required('Repository Name is required'),
     rating: yup
         .number()
         .required('Rating is required'),
-    reviewtext: yup
+    text: yup
         .string()
         .optional()
 });
@@ -59,10 +59,10 @@ const validationSchema = yup.object().shape({
 export const ReviewForm = ({ onSubmit }) => {
   return ( 
     <View style={styles.signInForm}>
-        <FormikTextInput style={styles.input} name="ownername" placeholder="Repository Owner Name" />
-        <FormikTextInput style={styles.input} name="repositoryname" placeholder="Repository Name" />
+        <FormikTextInput style={styles.input} name="ownerName" placeholder="Repository Owner Name" />
+        <FormikTextInput style={styles.input} name="repositoryName" placeholder="Repository Name" />
         <FormikTextInput style={styles.input} name="rating" placeholder="Rating between 0 and 100" />
-        <FormikTextInput style={styles.input} name="reviewtext" placeholder="Review Text" multiline={true} />
+        <FormikTextInput style={styles.input} name="text" placeholder="Review Text" multiline={true} />
         <Pressable style={styles.submitButton} onPress={onSubmit}>
             <Text style={styles.buttonText}>Create Review</Text>
         </Pressable>
@@ -75,12 +75,14 @@ const CreateReview = () => {
   const [createReview] = useCreateReview();
   
   const onSubmit = async (values) => {
-    const { ownername, repositoryname, rating, reviewtext } = values;
+    const { ownerName, repositoryName, rating, text } = values;
+    const numRating= Number(rating);
 
     try {
-      const data = await createReview({ ownername, repositoryname, rating, reviewtext });
+      const data = await createReview({ ownerName, repositoryName, rating: numRating, text });
       if (data){
-        navigate('/:id');
+        const repositoryId = data.createReview.repositoryId;
+        navigate(`/${repositoryId}`);
       } else {
         console.log('No data')
       }
