@@ -5,6 +5,7 @@ import RepositoryList from './RepositoryList';
 import SignInForm from './SignInForm';
 import GitHubView from './GitHubView';
 import RepositoryReviews from './RepositoryReviews';
+import ReviewForm from './createReview';
 
 const styles = StyleSheet.create({
   container: {
@@ -22,6 +23,7 @@ const Main = () => {
             <Route path="/" element={<RepositoryList />} />
             <Route path="/sign-in" element={<SignInForm/>}/>
             <Route path="/:id" element={<><GitHubView/><RepositoryReviews/></>}/>
+            <Route path="/createReview" element={<ReviewForm/>}/>
             <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
     </View>

@@ -5,6 +5,7 @@ import RepositoryTab from './RepositoryTab'
 import SignInTab from './SignInTab'
 import SignOutTab from './SignOutTab'
 import getUser from '../hooks/getUser';
+import CreateReviewTab from './CreateReviewTab'
 
 const styles = StyleSheet.create({
   container: {
@@ -25,6 +26,7 @@ const AppBar = () => {
   return <View style={styles.container}>
     <ScrollView horizontal>
       <RepositoryTab/>
+      <CreateReviewTab/>
       <SignOutTab/>
     </ScrollView>
   </View>;
