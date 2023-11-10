@@ -4,6 +4,7 @@ import theme from '../theme'
 import RepositoryTab from './RepositoryTab'
 import SignInTab from './SignInTab'
 import SignOutTab from './SignOutTab'
+import SignUpTab from './SignUpTab'
 import getUser from '../hooks/getUser';
 import CreateReviewTab from './CreateReviewTab'
 
@@ -36,6 +37,7 @@ const AppBar = () => {
     <ScrollView horizontal>
       <RepositoryTab/>
       <SignInTab/>
+      <SignUpTab/>
     </ScrollView>
   </View>;
 };

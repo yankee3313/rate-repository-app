@@ -13,3 +13,12 @@ export const CREATE_REVIEW = gql`
             repositoryId
         }
 }`;
+
+export const CREATE_USER = gql`
+    mutation CreateUser($user: CreateUserInput) {
+        createUser(user: $user) {
+        username
+        id
+        }
+    }
+`
