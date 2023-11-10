@@ -51,7 +51,7 @@ const validationSchema = yup.object().shape({
         .required('Password is required'),
     passwordConfirm: yup.string()
         .oneOf([yup.ref('password'), null])
-        .required('Password confirm is required')
+        .required('Password confirmation is required')
 });
 
 export const SignUpForm = ({ onSubmit }) => {
@@ -60,7 +60,7 @@ export const SignUpForm = ({ onSubmit }) => {
     <View style={styles.signInForm}>
         <FormikTextInput style={styles.input} name="username" placeholder="Username" />
         <FormikTextInput style={styles.input} name="password" placeholder="Password" secureTextEntry={true} />
-        <FormikTextInput style={styles.input} name="passwordConfirm" placeholder="Password Confirmation" secureTextEntry={true} />
+        <FormikTextInput style={styles.input} name="passwordConfirm" placeholder="Confirm Password" secureTextEntry={true} />
         <Pressable style={styles.submitButton} onPress={onSubmit}>
             <Text style={styles.buttonText}>Sign Up</Text>
         </Pressable>
