@@ -26,8 +26,6 @@ const RepositoryList = () => {
   ? repositories.edges.map(edge => edge.node)
   : [];
 
-  console.log(pickerDisplay,2)
-
   const handlePickerChange = (itemValue) => {
     switch (itemValue) {
       case 'ASC_DATE':
