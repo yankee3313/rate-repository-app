@@ -2,7 +2,7 @@ import { FlatList, View, StyleSheet, Pressable } from 'react-native';
 import RepositoryItem from './RepositoryItem';
 import useRepositories from '../hooks/useRepositories';
 import { useNavigate } from "react-router-native";
-import {Picker} from '@react-native-picker/picker';
+import { Picker } from '@react-native-picker/picker';
 import { useState } from 'react';
 
 const styles = StyleSheet.create({
@@ -14,32 +14,50 @@ const styles = StyleSheet.create({
 const ItemSeparator = () => <View style={styles.separator} />;
 
 const RepositoryList = () => {
-  const [orderBy, setOrderBy] = useState('CREATED_AT');
-  const [orderDirection, setOrderDirection] = useState('ASC');
-  const { repositories } = useRepositories({orderBy, orderDirection});
+  const [sortingOptions, setSortingOptions] = useState({
+    orderBy: 'CREATED_AT',
+    orderDirection: 'ASC',
+  });
+  const [pickerDisplay, setPickerDisplay] = useState('Ascending Date');
+  const { repositories } = useRepositories(sortingOptions);
   const navigate = useNavigate();
 
   const repositoryNodes = repositories
   ? repositories.edges.map(edge => edge.node)
   : [];
 
+  console.log(pickerDisplay,2)
+
+  const handlePickerChange = (itemValue) => {
+    switch (itemValue) {
+      case 'ASC_DATE':
+        setSortingOptions({ orderBy: 'CREATED_AT', orderDirection: 'ASC' });
+        break;
+      case 'DESC_DATE':
+        setSortingOptions({ orderBy: 'CREATED_AT', orderDirection: 'DESC' });
+        break;
+      case 'ASC_RATING':
+        setSortingOptions({ orderBy: 'RATING_AVERAGE', orderDirection: 'ASC' });
+        break;
+      case 'DESC_RATING':
+        setSortingOptions({ orderBy: 'RATING_AVERAGE', orderDirection: 'DESC' });
+        break;
+    }
+  };
+
   return (
     <View>
       <Picker
-        selectedValue={orderBy}
-        onValueChange={(itemValue, itemIndex) =>
-          setOrderBy(itemValue)
-        }>
-        <Picker.Item label="Date" value="CREATED_AT" />
-        <Picker.Item label="Rating" value="RATING_AVERAGE" />
-      </Picker>
-      <Picker
-        selectedValue={orderDirection}
+        selectedValue={pickerDisplay}
         onValueChange={(itemValue, itemIndex) => {
-          setOrderDirection(itemValue);
-        }}>
-        <Picker.Item label="Ascending" value="ASC" />
-        <Picker.Item label="Descending" value="DESC" />
+          setPickerDisplay(itemValue)
+          handlePickerChange(itemValue)
+        }
+        }>
+        <Picker.Item label="Ascending Date" value="ASC_DATE" />
+        <Picker.Item label="Descending Date" value="DESC_DATE" />
+        <Picker.Item label="Ascending Rating" value="ASC_RATING" />
+        <Picker.Item label="Descending Rating" value="DESC_RATING" />
       </Picker>
       <FlatList
         data={repositoryNodes}
