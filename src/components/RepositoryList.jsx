@@ -14,6 +14,9 @@ const styles = StyleSheet.create({
   },
   picker:{
     backgroundColor: '#e6e6e6',
+  },
+  searchbar: {
+    margin: 5
   }
 });
 
@@ -26,8 +29,9 @@ const RepositoryList = () => {
   });
   const [pickerDisplay, setPickerDisplay] = useState('Sort By: Ascending Date');
   const [searchQuery, setSearchQuery] = React.useState('');
+  const [deBounceValue] = useDebounce(searchQuery, 500)
   const onChangeSearch = query => setSearchQuery(query);
-  const { repositories } = useRepositories(sortingOptions, searchQuery);
+  const { repositories } = useRepositories(sortingOptions, deBounceValue);
   const navigate = useNavigate();
 
   console.log(searchQuery)
@@ -59,7 +63,8 @@ const RepositoryList = () => {
       placeholder="Search"
       onChangeText={onChangeSearch}
       value={searchQuery}
-    />
+      style={styles.searchbar}
+      />
       <Picker
         style={styles.picker}
         selectedValue={pickerDisplay}
