@@ -4,11 +4,17 @@ import useRepositories from '../hooks/useRepositories';
 import { useNavigate } from "react-router-native";
 import { Picker } from '@react-native-picker/picker';
 import { useState } from 'react';
+import { Searchbar } from 'react-native-paper';
+import * as React from 'react';
+import { useDebounce } from 'use-debounce';
 
 const styles = StyleSheet.create({
   separator: {
     height: 10,
   },
+  picker:{
+    backgroundColor: '#e6e6e6',
+  }
 });
 
 const ItemSeparator = () => <View style={styles.separator} />;
@@ -18,9 +24,13 @@ const RepositoryList = () => {
     orderBy: 'CREATED_AT',
     orderDirection: 'ASC',
   });
-  const [pickerDisplay, setPickerDisplay] = useState('Ascending Date');
-  const { repositories } = useRepositories(sortingOptions);
+  const [pickerDisplay, setPickerDisplay] = useState('Sort By: Ascending Date');
+  const [searchQuery, setSearchQuery] = React.useState('');
+  const onChangeSearch = query => setSearchQuery(query);
+  const { repositories } = useRepositories(sortingOptions, searchQuery);
   const navigate = useNavigate();
+
+  console.log(searchQuery)
 
   const repositoryNodes = repositories
   ? repositories.edges.map(edge => edge.node)
@@ -45,17 +55,23 @@ const RepositoryList = () => {
 
   return (
     <View>
+      <Searchbar
+      placeholder="Search"
+      onChangeText={onChangeSearch}
+      value={searchQuery}
+    />
       <Picker
+        style={styles.picker}
         selectedValue={pickerDisplay}
         onValueChange={(itemValue, itemIndex) => {
           setPickerDisplay(itemValue)
           handlePickerChange(itemValue)
         }
         }>
-        <Picker.Item label="Ascending Date" value="ASC_DATE" />
-        <Picker.Item label="Descending Date" value="DESC_DATE" />
-        <Picker.Item label="Ascending Rating" value="ASC_RATING" />
-        <Picker.Item label="Descending Rating" value="DESC_RATING" />
+        <Picker.Item label="Sort By: Ascending Date" value="ASC_DATE" />
+        <Picker.Item label="Sort By: Descending Date" value="DESC_DATE" />
+        <Picker.Item label="Sort By: Ascending Rating" value="ASC_RATING" />
+        <Picker.Item label="Sort By: Descending Rating" value="DESC_RATING" />
       </Picker>
       <FlatList
         data={repositoryNodes}
