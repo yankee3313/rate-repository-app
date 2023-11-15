@@ -7,6 +7,7 @@ import SignOutTab from './SignOutTab'
 import SignUpTab from './SignUpTab'
 import getUser from '../hooks/getUser';
 import CreateReviewTab from './CreateReviewTab'
+import MyReviewsTab from './MyReviewsTab';
 
 const styles = StyleSheet.create({
   container: {
@@ -20,14 +21,14 @@ const styles = StyleSheet.create({
 });
 
 const AppBar = () => {
-  const data = getUser();
-  const user = data.me;
+  const { me } = getUser(false);
 
-  if (user){
+  if (me){
   return <View style={styles.container}>
     <ScrollView horizontal>
       <RepositoryTab/>
       <CreateReviewTab/>
+      <MyReviewsTab/>
       <SignOutTab/>
     </ScrollView>
   </View>;

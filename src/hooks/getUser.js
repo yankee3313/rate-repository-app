@@ -1,10 +1,11 @@
 import { useQuery } from '@apollo/client';
 import { GET_USER } from '../graphql/queries';
 
-const getUser = () => {
-    const { data, error, loading } = useQuery(GET_USER);
+const getUser = ( includeReviews ) => {
+    const { data, error, loading } = useQuery(GET_USER, 
+        {variables: { includeReviews }});
 
-    return loading ? {} : data;
+    return loading ? null : data;
 }
 
 export default getUser;

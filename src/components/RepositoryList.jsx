@@ -34,8 +34,6 @@ const RepositoryList = () => {
   const { repositories } = useRepositories(sortingOptions, deBounceValue);
   const navigate = useNavigate();
 
-  console.log(searchQuery)
-
   const repositoryNodes = repositories
   ? repositories.edges.map(edge => edge.node)
   : [];

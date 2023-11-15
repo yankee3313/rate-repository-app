@@ -22,12 +22,30 @@ export const GET_REPOSITORIES = gql`
 `;
 
 export const GET_USER = gql `
-    query Query{
-        me {
+  query Query ($includeReviews: Boolean = false){
+    me {
+      reviews @include(if: $includeReviews) {
+        edges {
+          node {
+            rating
+            repositoryId
+            repository {
+              fullName
+            }
+            text
+            createdAt
+            user {
+              username
+            }
             id
-            username
+          }
         }
-    }`;
+      }
+      id
+      username
+    }
+  }
+  `;
 
 export const GET_REPOSITORY = gql `
     query Query($repositoryId: ID!) {

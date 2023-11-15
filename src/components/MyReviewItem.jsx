@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     }
   });
 
-const ReviewItem = ({ review }) => {
+const MyReviewItem = ({ review }) => {
   if (review){
     const date = format(new Date(review.createdAt), 'MM/dd/yyyy')
     
@@ -57,7 +57,7 @@ const ReviewItem = ({ review }) => {
           <Text style={styles.blueText}>{review.rating}</Text>
         </View>
         <View style={styles.userAndDate}>
-          <Text style={styles.name}>{review.user.username}</Text>
+          <Text style={styles.name}>{review.repository.fullName}</Text>
           <Text style={styles.date}>{date}</Text>
         </View>
       </View>
@@ -65,4 +65,4 @@ const ReviewItem = ({ review }) => {
     </View>
 )}};
 
-export default ReviewItem;
+export default MyReviewItem;
