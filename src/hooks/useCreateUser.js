@@ -7,8 +7,6 @@ const useCreateUser = () => {
   const signUp = async ({ username, password }) => {
 
       const { data } = await mutate({variables: { user: { username, password } }});
-
-      const { id } = data.createUser;
       
       return data;
 

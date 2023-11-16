@@ -1,9 +1,8 @@
 import { View, StyleSheet, FlatList } from 'react-native';
 import Text from './Text';
-import theme from '../theme';
 import MyReviewItem from './MyReviewItem';
 import getUser from '../hooks/getUser';
-
+import useDeleteReview from '../hooks/useDeleteReview'
 
 const styles = StyleSheet.create({
     itemContainer:{
@@ -25,15 +24,24 @@ const styles = StyleSheet.create({
 const ItemSeparator = () => <View style={styles.separator} />;
 
 const MyReviews = () => {
-    const data = getUser(true);
-    console.log(data)
+    const { data, refetch } = getUser(true);
+    const [deleteReview] = useDeleteReview();
     const reviews = data
         ? data.me.reviews.edges.map(edge => edge.node)
-        : [];
+        : null;
 
-    const reversedReviews = reviews.slice().reverse();
+    const reversedReviews = reviews ? reviews.slice().reverse() : null;
 
-    if (reversedReviews){
+    if (data && reviews && reversedReviews){
+
+        const onSubmit = async (id) => {
+            try {
+                await deleteReview({ id: id });
+                refetch();
+            } catch (e) {
+                console.log(e);
+            }
+        };
     
         return(
             <FlatList
@@ -42,7 +50,7 @@ const MyReviews = () => {
                 keyExtractor={item => item.id}
                 style={styles.reviews}
                 renderItem={({item}) => 
-                <MyReviewItem review={item} />
+                <MyReviewItem review={item} onSubmit={onSubmit} />
                 }
             />
         );

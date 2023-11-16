@@ -21,9 +21,9 @@ const styles = StyleSheet.create({
 });
 
 const AppBar = () => {
-  const { me } = getUser(false);
+  const data = getUser(false);
 
-  if (me){
+  if (data){
   return <View style={styles.container}>
     <ScrollView horizontal>
       <RepositoryTab/>

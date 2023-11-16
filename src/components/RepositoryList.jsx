@@ -17,6 +17,10 @@ const styles = StyleSheet.create({
   },
   searchbar: {
     margin: 5
+  },
+  flatList: {
+    marginTop: 10,
+    marginBottom: 25
   }
 });
 
@@ -77,6 +81,7 @@ const RepositoryList = () => {
         <Picker.Item label="Sort By: Descending Rating" value="DESC_RATING" />
       </Picker>
       <FlatList
+        style={styles.flatList}
         data={repositoryNodes}
         ItemSeparatorComponent={ItemSeparator}
         keyExtractor={item => item.id}
