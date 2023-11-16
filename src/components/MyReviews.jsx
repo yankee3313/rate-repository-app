@@ -2,7 +2,7 @@ import { View, StyleSheet, FlatList } from 'react-native';
 import Text from './Text';
 import MyReviewItem from './MyReviewItem';
 import getUser from '../hooks/getUser';
-import useDeleteReview from '../hooks/useDeleteReview'
+import useDeleteReview from '../hooks/useDeleteReview';
 
 const styles = StyleSheet.create({
     itemContainer:{
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
 const ItemSeparator = () => <View style={styles.separator} />;
 
 const MyReviews = () => {
-    const { data, refetch } = getUser(true);
+    const { data, loading, refetch } = getUser(true);
     const [deleteReview] = useDeleteReview();
     const reviews = data
         ? data.me.reviews.edges.map(edge => edge.node)

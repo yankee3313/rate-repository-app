@@ -8,6 +8,7 @@ import SignUpTab from './SignUpTab'
 import getUser from '../hooks/getUser';
 import CreateReviewTab from './CreateReviewTab'
 import MyReviewsTab from './MyReviewsTab';
+import Text from './Text';
 
 const styles = StyleSheet.create({
   container: {
@@ -21,7 +22,15 @@ const styles = StyleSheet.create({
 });
 
 const AppBar = () => {
-  const data = getUser(false);
+  const { data, loading } = getUser(false);
+
+  if (loading) {
+    return (
+      <View style={styles.container}>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
 
   if (data){
   return <View style={styles.container}>
