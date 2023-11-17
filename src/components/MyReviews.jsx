@@ -24,15 +24,15 @@ const styles = StyleSheet.create({
 const ItemSeparator = () => <View style={styles.separator} />;
 
 const MyReviews = () => {
-    const { data, loading, refetch } = getUser(true);
+    const { data, refetch } = getUser(true);
     const [deleteReview] = useDeleteReview();
-    const reviews = data
-        ? data.me.reviews.edges.map(edge => edge.node)
-        : null;
+    
+    if (data){
+        console.log(data, 'MyReviews')
+        if (data.me){
+        const reviews = data.me.reviews.edges.map(edge => edge.node)
 
-    const reversedReviews = reviews ? reviews.slice().reverse() : null;
-
-    if (data && reviews && reversedReviews){
+        const reversedReviews = reviews ? reviews.slice().reverse() : null;
 
         const onSubmit = async (id) => {
             try {
@@ -53,9 +53,10 @@ const MyReviews = () => {
                 <MyReviewItem review={item} onSubmit={onSubmit} />
                 }
             />
-        );
-    }   else {
-            return <Text>Loading...</Text>
+        )
     }
+    }
+
+    return <Text>Loading...</Text>;
 };
 export default MyReviews;

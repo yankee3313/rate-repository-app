@@ -4,7 +4,7 @@ import theme from '../theme';
 import { useParams } from 'react-router-native';
 import getReviews from '../hooks/getReviews';
 import ReviewItem from './ReviewItem';
-
+import { useEffect } from 'react';
 
 const styles = StyleSheet.create({
     itemContainer:{
@@ -24,8 +24,11 @@ const ItemSeparator = () => <View style={styles.separator} />;
 
 const RepositoryReviews = () => {
     const { id } = useParams();
-    const data  = getReviews(id);
+    const { data, refetch }  = getReviews(id);
     
+    useEffect(() => {refetch()}, [id]);
+    
+    if (data){
     const reviews = data
         ? data.repository.reviews.edges.map(edge => edge.node)
         : [];
@@ -46,6 +49,7 @@ const RepositoryReviews = () => {
         );
     }   else {
             return <Text>Loading...</Text>
+    }
     }
 };
 export default RepositoryReviews;

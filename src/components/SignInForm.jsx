@@ -6,6 +6,7 @@ import theme from '../theme';
 import * as yup from 'yup';
 import useSignIn from '../hooks/useSignIn';
 import { useNavigate } from "react-router-native";
+import getUser from '../hooks/getUser';
 
 const initialValues = {
   username: '',
@@ -66,6 +67,7 @@ export const SignInForm = ({ onSubmit }) => {
 const SignIn = () => {
   const navigate = useNavigate();
   const [signIn] = useSignIn();
+  const { refetch } = getUser(false);
   
   const onSubmit = async (values) => {
     const { username, password } = values;
@@ -74,6 +76,7 @@ const SignIn = () => {
       const data = await signIn({ username, password });
       if (data){
         navigate('/');
+        refetch();
       } else {
         console.log('No data')
       }

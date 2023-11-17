@@ -22,28 +22,22 @@ const styles = StyleSheet.create({
 });
 
 const AppBar = () => {
-  const { data, loading } = getUser(false);
-
-  if (loading) {
-    return (
-      <View style={styles.container}>
-        <Text>Loading...</Text>
-      </View>
-    );
-  }
+  const {data} = getUser(false);
+  console.log(data, 'AppBar')
 
   if (data){
-  return <View style={styles.container}>
-    <ScrollView horizontal>
-      <RepositoryTab/>
-      <CreateReviewTab/>
-      <MyReviewsTab/>
-      <SignOutTab/>
-    </ScrollView>
-  </View>;
-  }
+    if(data.me){
+    return <View style={styles.container}>
+      <ScrollView horizontal>
+        <RepositoryTab/>
+        <CreateReviewTab/>
+        <MyReviewsTab/>
+        <SignOutTab/>
+      </ScrollView>
+    </View>;
+    }}
 
-  return <View style={styles.container}>
+    return <View style={styles.container}>
     <ScrollView horizontal>
       <RepositoryTab/>
       <SignInTab/>
