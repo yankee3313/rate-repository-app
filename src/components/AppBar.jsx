@@ -8,7 +8,6 @@ import SignUpTab from './SignUpTab'
 import getUser from '../hooks/getUser';
 import CreateReviewTab from './CreateReviewTab'
 import MyReviewsTab from './MyReviewsTab';
-import Text from './Text';
 
 const styles = StyleSheet.create({
   container: {
@@ -22,7 +21,7 @@ const styles = StyleSheet.create({
 });
 
 const AppBar = () => {
-  const {data} = getUser(false);
+  const { data } = getUser(false);
   console.log(data, 'AppBar')
 
   if (data){

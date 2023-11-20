@@ -20,7 +20,11 @@ const styles = StyleSheet.create({
   },
   flatList: {
     marginTop: 10,
-    marginBottom: 25
+    flex: 1,
+  },
+  fullPage: {
+    flex: 1,
+    marginBottom: 0
   }
 });
 
@@ -29,18 +33,29 @@ const ItemSeparator = () => <View style={styles.separator} />;
 const RepositoryList = () => {
   const [sortingOptions, setSortingOptions] = useState({
     orderBy: 'CREATED_AT',
-    orderDirection: 'ASC',
+    orderDirection: 'DESC',
   });
   const [pickerDisplay, setPickerDisplay] = useState('Sort By: Ascending Date');
   const [searchQuery, setSearchQuery] = React.useState('');
   const [deBounceValue] = useDebounce(searchQuery, 500)
   const onChangeSearch = query => setSearchQuery(query);
-  const { repositories } = useRepositories(sortingOptions, deBounceValue);
+  const first = 6;
+  const after = '';
+  const { repositories, fetchMore } = useRepositories(sortingOptions, deBounceValue, first, after);
   const navigate = useNavigate();
+
+  console.log(repositories)
 
   const repositoryNodes = repositories
   ? repositories.edges.map(edge => edge.node)
   : [];
+
+  console.log(repositoryNodes)
+
+  const onEndReach = () => {
+    fetchMore();
+    console.log('You have reached the end of the list');
+  };
 
   const handlePickerChange = (itemValue) => {
     switch (itemValue) {
@@ -60,7 +75,7 @@ const RepositoryList = () => {
   };
 
   return (
-    <View>
+    <View style={styles.fullPage}>
       <Searchbar
       placeholder="Search"
       onChangeText={onChangeSearch}
@@ -75,16 +90,18 @@ const RepositoryList = () => {
           handlePickerChange(itemValue)
         }
         }>
-        <Picker.Item label="Sort By: Ascending Date" value="ASC_DATE" />
-        <Picker.Item label="Sort By: Descending Date" value="DESC_DATE" />
-        <Picker.Item label="Sort By: Ascending Rating" value="ASC_RATING" />
         <Picker.Item label="Sort By: Descending Rating" value="DESC_RATING" />
+        <Picker.Item label="Sort By: Ascending Rating" value="ASC_RATING" />
+        <Picker.Item label="Sort By: Descending Date" value="DESC_DATE" />
+        <Picker.Item label="Sort By: Ascending Date" value="ASC_DATE" />
       </Picker>
       <FlatList
         style={styles.flatList}
         data={repositoryNodes}
         ItemSeparatorComponent={ItemSeparator}
         keyExtractor={item => item.id}
+        onEndReached={onEndReach}
+        onEndReachedThreshold={0.5}
         renderItem={({item}) => <Pressable onPress={() => navigate(`/${item.id}`)}>
           <RepositoryItem item={item} />
           </Pressable>
