@@ -32,25 +32,22 @@ const ItemSeparator = () => <View style={styles.separator} />;
 
 const RepositoryList = () => {
   const [sortingOptions, setSortingOptions] = useState({
-    orderBy: 'CREATED_AT',
+    orderBy: 'RATING_AVERAGE',
     orderDirection: 'DESC',
   });
   const [pickerDisplay, setPickerDisplay] = useState('Sort By: Ascending Date');
   const [searchQuery, setSearchQuery] = React.useState('');
   const [deBounceValue] = useDebounce(searchQuery, 500)
   const onChangeSearch = query => setSearchQuery(query);
-  const first = 6;
-  const after = '';
-  const { repositories, fetchMore } = useRepositories(sortingOptions, deBounceValue, first, after);
+  const first = 5;
+  const { repositories, fetchMore } = useRepositories(sortingOptions, deBounceValue, first);
   const navigate = useNavigate();
 
-  console.log(repositories)
+  console.log(repositories, 'RepositoryList')
 
   const repositoryNodes = repositories
   ? repositories.edges.map(edge => edge.node)
   : [];
-
-  console.log(repositoryNodes)
 
   const onEndReach = () => {
     fetchMore();
