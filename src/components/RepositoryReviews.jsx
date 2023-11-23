@@ -24,9 +24,8 @@ const ItemSeparator = () => <View style={styles.separator} />;
 
 const RepositoryReviews = () => {
     const { id } = useParams();
-    const { data, refetch }  = getReviews(id);
-    
-    useEffect(() => {refetch()}, [id]);
+    const first = 2;
+    const { data, fetchMore }  = getReviews(id, first);
     
     if (data){
     const reviews = data
@@ -35,13 +34,21 @@ const RepositoryReviews = () => {
 
     const reversedReviews = reviews.slice().reverse();
 
+    const onEndReach = () => {
+        fetchMore();
+        console.log('You have reached the end of the list');
+      };
+
     if (reversedReviews){
+        console.log(reversedReviews)
     
         return(
             <FlatList
                 data={reversedReviews}
                 ItemSeparatorComponent={ItemSeparator}
                 keyExtractor={item => item.id}
+                onEndReached={onEndReach}
+                onEndReachedThreshold={0.1}
                 renderItem={({item}) => 
                 <ReviewItem review={item} />
                 }

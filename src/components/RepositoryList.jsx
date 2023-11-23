@@ -7,7 +7,6 @@ import { useState } from 'react';
 import { Searchbar } from 'react-native-paper';
 import * as React from 'react';
 import { useDebounce } from 'use-debounce';
-import { useApolloClient } from '@apollo/client';
 
 const styles = StyleSheet.create({
   separator: {
@@ -48,8 +47,6 @@ const RepositoryList = () => {
   const repositoryNodes = repositories
   ? repositories.edges.map(edge => edge.node)
   : [];
-
-  console.log(repositories, repositoryNodes)
 
   const onEndReach = () => {
     fetchMore();

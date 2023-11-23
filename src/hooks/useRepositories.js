@@ -39,8 +39,6 @@ const useRepositories = (sortingOptions, searchValue, first, after) => {
         });
         }, [sortingOptions, searchValue]);    
 
-    console.log(searchValue, 'useRepositories')
-
     return loading ? {} : {
         repositories: data?.repositories,
         fetchMore: handleFetchMore,
