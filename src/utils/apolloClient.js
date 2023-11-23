@@ -6,17 +6,22 @@ const httpLink = createHttpLink({
   uri: 'http://192.168.1.20:4000/graphql',
 });
 
-const cache = new InMemoryCache({
-  typePolicies: {
-    Query: {
-      fields: {
-        repositories: relayStylePagination(),
-      },
-    },
-  },
-});
-
 const createApolloClient = (authStorage) => {
+  const cache = new InMemoryCache({
+    typePolicies: {
+      Query: {
+        fields: {
+          repositories: relayStylePagination(),
+        },
+      },
+      Repository: {
+        fields: {
+          reviews: relayStylePagination()
+        }
+      }
+    },
+  });
+
   const authLink = setContext(async (_, { headers }) => {
     try {
       const accessToken = await authStorage.getAccessToken();

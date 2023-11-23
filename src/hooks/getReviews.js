@@ -4,6 +4,8 @@ import { GET_REVIEWS } from '../graphql/queries';
 const getReviews = (id) => {
     const { data, error, loading, refetch } = useQuery(GET_REVIEWS,
         {variables: { repositoryId: id }});
+    
+    console.log(data, 'getReviews')
         
     return { data, refetch };
 }

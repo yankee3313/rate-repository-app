@@ -1,14 +1,17 @@
 import { useQuery } from '@apollo/client';
 import { GET_REPOSITORIES } from '../graphql/queries';
+import { useEffect } from 'react';
 
-const useRepositories = (sortingOptions, deBounceValue, first, after) => {
-    const { data, error, loading, fetchMore, ...result } = useQuery(GET_REPOSITORIES,
-        {variables: { orderBy: sortingOptions.orderBy, 
+const useRepositories = (sortingOptions, searchValue, first, after) => {
+    const { data, error, loading, fetchMore, refetch } = useQuery(GET_REPOSITORIES, {
+        variables: { 
+            orderBy: sortingOptions.orderBy, 
             orderDirection: sortingOptions.orderDirection,
-            searchKeyword: deBounceValue,
+            searchKeyword: searchValue,
             first: first,
-            after: after }});
-    
+            after: after 
+        }
+    });
 
     const handleFetchMore = () => {
         const canFetchMore = !loading && data?.repositories.pageInfo.hasNextPage;
@@ -16,23 +19,33 @@ const useRepositories = (sortingOptions, deBounceValue, first, after) => {
         if (!canFetchMore) {
             return;
         }
-
     
         fetchMore({
             variables: {
-            first: 2,
-            after: data.repositories.pageInfo.endCursor,
-            orderBy: sortingOptions.orderBy, 
-            orderDirection: sortingOptions.orderDirection,
-            searchKeyword: deBounceValue
-            },
+                first: 2,
+                after: data.repositories.pageInfo.endCursor,
+                orderBy: sortingOptions.orderBy, 
+                orderDirection: sortingOptions.orderDirection,
+                searchKeyword: searchValue
+            }
         });
         };
 
-    return loading ? {} : {repositories: data?.repositories,
+    useEffect(() => {
+        refetch({
+            orderBy: sortingOptions.orderBy,
+            orderDirection: sortingOptions.orderDirection,
+            searchKeyword: searchValue,
+        });
+        }, [sortingOptions, searchValue]);    
+
+    console.log(searchValue, 'useRepositories')
+
+    return loading ? {} : {
+        repositories: data?.repositories,
         fetchMore: handleFetchMore,
-        loading,
-        ...result,};
+        loading
+    };
 }
 
 export default useRepositories;
